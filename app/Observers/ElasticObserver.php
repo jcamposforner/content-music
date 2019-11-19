@@ -20,7 +20,7 @@ class ElasticObserver
     }
 
     /**
-     * Event when Model is saved when use Searchable trait is used
+     * Event when Model is saved when Searchable trait is used
      *
      * @param SearchableInterface $model
      * @return void
@@ -36,7 +36,7 @@ class ElasticObserver
     }
 
     /**
-     * Event when Model is deleted when use Searchable trait is used
+     * Event when Model is deleted when Searchable trait is used
      *
      * @param SearchableInterface $model
      * @return void

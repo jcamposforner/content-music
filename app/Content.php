@@ -11,7 +11,13 @@ class Content extends Model implements SearchableInterface
     use Searchable;
 
     protected $guarded = [];
-    protected $with = ['Image', 'Comments', 'Tags'];
+
+    /**
+     * Eager loading for saving on ElasticSearch
+     *
+     * @var array
+     */
+    protected $with = ['Image', 'Tags'];
 
     public function image()
     {
