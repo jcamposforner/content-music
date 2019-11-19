@@ -35,7 +35,8 @@ class Content extends Model implements SearchableInterface
     }
 
     /**
-     * Convert model to an array
+     * Convert model to an array.
+     * Override default function
      *
      * @return array
      */
