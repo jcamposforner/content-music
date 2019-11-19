@@ -20,9 +20,6 @@ Route::get('foo', function () {
     $content->description = "Test 1";
     $content->src = "URI";
     $content->save();
-    foreach ($content->image()->get() as $image) {
-        echo $image->id . PHP_EOL;
-    }
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

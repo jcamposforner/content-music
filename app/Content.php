@@ -11,6 +11,7 @@ class Content extends Model implements SearchableInterface
     use Searchable;
 
     protected $guarded = [];
+    protected $with = ['Image', 'Comments', 'Tags'];
 
     public function image()
     {
@@ -25,5 +26,15 @@ class Content extends Model implements SearchableInterface
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Convert model to an array
+     *
+     * @return array
+     */
+    public function toSearchArray(): array
+    {
+        return $this->toArray();
     }
 }
