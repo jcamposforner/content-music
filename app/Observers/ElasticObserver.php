@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Search\Searchable;
+use App\Search\SearchableInterface;
 use Elasticsearch\Client;
 
 class ElasticObserver
@@ -22,10 +22,10 @@ class ElasticObserver
     /**
      * Event when Model is saved when use Searchable trait is used
      *
-     * @param Searchable $model
+     * @param SearchableInterface $model
      * @return void
      */
-    public function saved(Searchable $model)
+    public function saved(SearchableInterface $model)
     {
         $this->elasticSearch->index([
             'index' => $model->getSearchIndex(),
@@ -38,10 +38,10 @@ class ElasticObserver
     /**
      * Event when Model is deleted when use Searchable trait is used
      *
-     * @param Searchable $model
+     * @param SearchableInterface $model
      * @return void
      */
-    public function deleted(Searchable $model)
+    public function deleted(SearchableInterface $model)
     {
         $this->elasticSearch->delete([
             'index' => $model->getSearchIndex(),

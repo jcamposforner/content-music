@@ -1,5 +1,6 @@
 <?php
 
+use App\Content;
 use Illuminate\Http\Request;
 
 /*
@@ -12,23 +13,16 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-use Elasticsearch\ClientBuilder;
 
 Route::get('foo', function () {
-    $client = ClientBuilder::create()->build();
-    $params = [
-        'index' => 'my_index2',
-        'body'  => [
-            'query' => [
-                'match' => [
-                    'field1' => 'asd'
-                ]
-            ]
-        ]
-    ];
-
-    $response = $client->search($params);
-    print_r($response);
+    $content = Content::first();
+    $content->title = "Test";
+    $content->description = "Test 1";
+    $content->src = "URI";
+    $content->save();
+    foreach ($content->image()->get() as $image) {
+        echo $image->id . PHP_EOL;
+    }
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
