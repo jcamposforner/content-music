@@ -1,6 +1,5 @@
 <?php
 
-use App\Content;
 use Illuminate\Http\Request;
 
 /*
@@ -14,14 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('foo', function () {
-    $content = Content::first();
-    $content->title = "Test";
-    $content->description = "Test 1";
-    $content->src = "URI";
-    $content->save();
-});
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/user/register', 'AuthController@register');
+Route::post('/user/login', 'AuthController@login');
+Route::get('/user/verify-email/{uuid}', 'AuthController@verifyEmail');
+Route::get('/foo', 'ContentController@index');
