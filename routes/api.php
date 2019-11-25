@@ -23,6 +23,7 @@ Route::group([
     ], function () {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+        Route::post('profile-picture', 'UploadController@uploadProfilePicture');
     });
 });
 

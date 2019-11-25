@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Events\NewUserHasRegisteredEvent;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Mail\RegisterMail;
 use App\User;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\Request;
 use Webpatser\Uuid\Uuid;
@@ -60,9 +57,10 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+        $user->save();
+
         $uuid = Uuid::generate()->string;
         Redis::set($uuid, $user->id, 'EX', 3600);
-        $user->save();
         event(new NewUserHasRegisteredEvent($user, $uuid));
 
         return response()->json([
