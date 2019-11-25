@@ -33,10 +33,12 @@ class UploadController extends Controller
             $request->user()->image()->delete();
             $request->user()->image()->create(['uri' => '/images/' . $original]);
         });
-        $images = $request->user()->image()->get();
 
-        $currentImage = end($images);
-
-        return $currentImage;
+        $user = $request->user()->with('image')->get();
+        return response()->json([
+            'status'  => 201,
+            'data'    => $user,
+            'message' => 'Successfully upload!'
+        ], 201);
     }
 }

@@ -11,6 +11,8 @@ class Image extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['deleted_at', 'updated_at'];
+
     public function imageable()
     {
         return $this->morphTo();
