@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewUserHasRegisteredEvent;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\RegisterMail;
@@ -16,38 +17,6 @@ use Webpatser\Uuid\Uuid;
 
 class AuthController extends Controller
 {
-    /**
-     * Register
-     *
-     * @param RegisterRequest $request
-     * @param User $user
-     *
-     * @return Response
-     */
-    public function register(RegisterRequest $request, User $user)
-    {
-        try {
-            $user->email    = $request->email;
-            $user->name     = $request->name;
-            $user->password = bcrypt($request->password);
-
-            $uuid = Uuid::generate()->string;
-            Mail::to($request->email)->send(new RegisterMail($user, $uuid));
-            $user->save();
-            Redis::set($uuid, $user->id, 'EX', 3600);
-
-            return \response([
-                'status' => 200,
-                'data'   => $user
-            ], 200);
-        } catch (Exception $e) {
-            return \response([
-                'status' => 500,
-                'data'   => "An error has ocurred"
-            ], 500);
-        }
-    }
-
     /**
      * Verify UUID stored on redis for 1 hour
      *
@@ -92,9 +61,9 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
         $uuid = Uuid::generate()->string;
-        Mail::to($request->email)->send(new RegisterMail($user, $uuid));
-        $user->save();
         Redis::set($uuid, $user->id, 'EX', 3600);
+        $user->save();
+        event(new NewUserHasRegisteredEvent($user, $uuid));
 
         return response()->json([
             'status'  => 201,
