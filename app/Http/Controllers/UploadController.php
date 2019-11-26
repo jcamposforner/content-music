@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadProfilePictureRequest;
-use App\Image;
+use App\Services\UploadService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -13,23 +13,20 @@ class UploadController extends Controller
      * Upload profile picture for the current logged user
      *
      * @param UploadProfilePictureRequest $request
+     * @param UploadService $uploadService
      *
      * @return [json] user object
      */
-    public function uploadProfilePicture(UploadProfilePictureRequest $request)
+    public function uploadProfilePicture(UploadProfilePictureRequest $request, UploadService $uploadService)
     {
         if (!is_dir(public_path('/images'))) {
-            mkdir(public_path('/images'), 0777);
+            mkdir(storage_path('/images'), 0777);
         }
 
         $images = Collection::wrap($request->file('image'));
 
-        $images->each(function ($image) use ($request) {
-            $basename = Str::random();
-            $original = $basename . '.' . $image->getClientOriginalExtension();
-
-            $image->move(public_path('/images'), $original);
-
+        $images->each(function (\Illuminate\Http\UploadedFile $image) use ($request, $uploadService) {
+            $original = $uploadService->savePrivateImage($image);
             $request->user()->image()->delete();
             $request->user()->image()->create(['uri' => '/images/' . $original]);
         });
