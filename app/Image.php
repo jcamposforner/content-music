@@ -11,7 +11,7 @@ class Image extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['deleted_at', 'updated_at'];
+    protected $hidden = ['deleted_at', 'updated_at', 'path'];
 
     public function imageable()
     {

@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Constants\StorageConstants;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\File\File;
 
 class UploadService
 {
@@ -14,15 +15,15 @@ class UploadService
      *
      * @param UploadedFile $file
      *
-     * @return string
+     * @return File
      */
-    public function savePrivateImage(UploadedFile $file): string
+    public function savePrivateImage(UploadedFile $file): File
     {
         $basename = Str::random();
         $original = $basename . '.' . $file->getClientOriginalExtension();
 
         $file = $file->move(storage_path(StorageConstants::IMAGES), $original);
 
-        return $file->getRealPath();
+        return $file;
     }
 }

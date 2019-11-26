@@ -29,9 +29,9 @@ class UploadController extends Controller
 
         $images->each(function (\Illuminate\Http\UploadedFile $image) use ($request, $uploadService) {
             $original = $uploadService->savePrivateImage($image);
-            event(new CropImageEvent($original));
+            event(new CropImageEvent($original->getRealPath()));
             $request->user()->image()->delete();
-            $request->user()->image()->create(['uri' => $original]);
+            $request->user()->image()->create(['uri' => $original->getBasename(), 'path' => $original->getRealPath()]);
         });
 
         $user = $request->user()->with('image')->get();
