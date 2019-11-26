@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Constants\StorageConstants;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
@@ -20,8 +21,8 @@ class UploadService
         $basename = Str::random();
         $original = $basename . '.' . $file->getClientOriginalExtension();
 
-        $file->move(storage_path('/images'), $original);
+        $file = $file->move(storage_path(StorageConstants::IMAGES), $original);
 
-        return $original;
+        return $file->getRealPath();
     }
 }

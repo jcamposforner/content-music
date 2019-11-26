@@ -26,9 +26,9 @@ class NewUserHasRegisteredEvent
     public $uuid;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * NewUserHasRegisteredEvent constructor.
+     * @param User $user
+     * @param string $uuid
      */
     public function __construct(User $user, string $uuid)
     {

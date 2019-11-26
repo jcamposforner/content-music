@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CropImageEvent;
 use App\Http\Requests\UploadProfilePictureRequest;
 use App\Services\UploadService;
 use Illuminate\Support\Collection;
@@ -28,8 +29,9 @@ class UploadController extends Controller
 
         $images->each(function (\Illuminate\Http\UploadedFile $image) use ($request, $uploadService) {
             $original = $uploadService->savePrivateImage($image);
+            event(new CropImageEvent($original));
             $request->user()->image()->delete();
-            $request->user()->image()->create(['uri' => '/images/' . $original]);
+            $request->user()->image()->create(['uri' => $original]);
         });
 
         $user = $request->user()->with('image')->get();

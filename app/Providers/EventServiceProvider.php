@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CropImageEvent;
 use App\Events\NewUserHasRegisteredEvent;
+use App\Listeners\CropImageListener;
 use App\Listeners\RegisterMailListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -16,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         NewUserHasRegisteredEvent::class => [
             RegisterMailListener::class,
+        ],
+        CropImageEvent::class => [
+            CropImageListener::class,
         ],
     ];
 
