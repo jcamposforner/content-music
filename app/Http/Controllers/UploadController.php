@@ -6,6 +6,7 @@ use App\Http\Requests\UploadProfilePictureRequest;
 use App\Services\UploadService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class UploadController extends Controller
 {
@@ -15,7 +16,7 @@ class UploadController extends Controller
      * @param UploadProfilePictureRequest $request
      * @param UploadService $uploadService
      *
-     * @return [json] user object
+     * @return ResponseFactoryInterface
      */
     public function uploadProfilePicture(UploadProfilePictureRequest $request, UploadService $uploadService)
     {
