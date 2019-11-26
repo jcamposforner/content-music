@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\StorageConstants;
 use App\Events\CropImageEvent;
 use App\Http\Requests\UploadProfilePictureRequest;
 use App\Services\UploadService;
@@ -21,8 +22,8 @@ class UploadController extends Controller
      */
     public function uploadProfilePicture(UploadProfilePictureRequest $request, UploadService $uploadService)
     {
-        if (!is_dir(public_path('/images'))) {
-            mkdir(storage_path('/images'), 0777);
+        if (!is_dir(storage_path(StorageConstants::IMAGES))) {
+            mkdir(storage_path(StorageConstants::IMAGES), 0777);
         }
 
         $images = Collection::wrap($request->file('image'));

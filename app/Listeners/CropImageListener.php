@@ -21,6 +21,10 @@ class CropImageListener implements ShouldQueue
 
             $fileName = "{$img->filename}_{$dimensions[0]}_{$dimensions[1]}.$img->extension";
 
+            if (!is_dir(storage_path(StorageConstants::IMAGES_THUMBNAIL))) {
+                mkdir(storage_path(StorageConstants::IMAGES_THUMBNAIL), 0777);
+            }
+
             $img->save(storage_path(StorageConstants::IMAGES_THUMBNAIL.$fileName));
         }
     }
