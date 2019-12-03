@@ -17,7 +17,6 @@ Route::group([
     Route::get('verify-email/{uuid}', 'AuthController@verifyEmail');
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
-
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
@@ -25,6 +24,13 @@ Route::group([
         Route::get('user', 'AuthController@user');
         Route::post('profile-picture', 'UploadController@uploadProfilePicture');
     });
+});
+
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'upload'
+], function () {
+    Route::post('video', 'UploadController@uploadVideoContent');
 });
 
 Route::get('/foo', 'ContentController@index')->middleware();

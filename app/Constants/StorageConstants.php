@@ -18,4 +18,11 @@ class StorageConstants
         [300, 300],
         [640, 480],
     ];
+    const RESIZED_VIDEOS_VALUES = [
+        [320, 240],
+        [480, 360],
+        [720, 480],
+        [1280, 720],
+        [1920, 1080]
+    ];
 }

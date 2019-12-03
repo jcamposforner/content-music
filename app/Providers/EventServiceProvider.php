@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\CropImageEvent;
 use App\Events\NewUserHasRegisteredEvent;
+use App\Events\ResizeVideoEvent;
 use App\Listeners\CropImageListener;
 use App\Listeners\RegisterMailListener;
+use App\Listeners\ResizeVideoListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CropImageEvent::class => [
             CropImageListener::class,
+        ],
+        ResizeVideoEvent::class => [
+            ResizeVideoListener::class,
         ],
     ];
 

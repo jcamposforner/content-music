@@ -10,19 +10,12 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class UploadService
 {
-    /**
-     * Method for uploading a private image
-     *
-     * @param UploadedFile $file
-     *
-     * @return File
-     */
-    public function savePrivateImage(UploadedFile $file): File
+    public function savePrivateContent(UploadedFile $file, string $path): File
     {
         $basename = Str::random();
         $original = $basename . '.' . $file->getClientOriginalExtension();
 
-        $file = $file->move(storage_path(StorageConstants::IMAGES), $original);
+        $file = $file->move(storage_path($path), $original);
 
         return $file;
     }

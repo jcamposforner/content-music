@@ -17,7 +17,8 @@
         "laravel/tinker": "^1.0",
         "laraveles/spanish": "^1.4",
         "predis/predis": "^1.1",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
+        "php-ffmpeg/php-ffmpeg": "0.14"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
