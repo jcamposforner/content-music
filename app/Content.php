@@ -19,6 +19,11 @@ class Content extends Model implements SearchableInterface
      */
     protected $with = ['Image', 'Tags'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function image()
     {
         return $this->morphMany(Image::class, 'imageable');

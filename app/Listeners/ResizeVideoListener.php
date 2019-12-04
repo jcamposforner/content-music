@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Constants\StorageConstants;
+use FFMpeg\Coordinate\FrameRate;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\Dimension;
@@ -31,6 +32,7 @@ class ResizeVideoListener implements ShouldQueue
             $video = $ffmpeg->open($event->path);
             $video
                 ->filters()
+                ->framerate(new FrameRate(30), 1)
                 ->resize(new Dimension($resolution[0], $resolution[1]))
                 ->synchronize();
             $video->save(new X264('aac'), storage_path(StorageConstants::RESIZED_VIDEOS).$fileName);

@@ -15,11 +15,9 @@ use Webpatser\Uuid\Uuid;
 class AuthController extends Controller
 {
     /**
-     * Verify UUID stored on redis for 1 hour
-     *
      * @param string $uuid
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Exception
      */
     public function verifyEmail(string $uuid)
     {
@@ -44,11 +42,11 @@ class AuthController extends Controller
     }
 
     /**
-     * Register
-     *
      * @param RegisterRequest $request
      * @param User $user
-     * @return void
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function signup(RegisterRequest $request, User $user)
     {
@@ -71,14 +69,8 @@ class AuthController extends Controller
     }
 
     /**
-     * Login user and create token
-     *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [boolean] remember_me
-     * @return [string] access_token
-     * @return [string] token_type
-     * @return [string] expires_at
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
     {
@@ -116,9 +108,8 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout user (Revoke the token)
-     *
-     * @return [string] message
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function logout(Request $request)
     {

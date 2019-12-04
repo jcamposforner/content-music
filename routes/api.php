@@ -20,6 +20,7 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
+        Route::resource('content', 'ContentController');
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
         Route::post('profile-picture', 'UploadController@uploadProfilePicture');
