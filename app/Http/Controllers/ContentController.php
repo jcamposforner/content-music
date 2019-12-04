@@ -71,7 +71,7 @@ class ContentController extends Controller
         return response()->json([
             'status'  => 200,
             'data'    => $content,
-            'message' => 'Edited'
+            'message' => ''
         ]);
     }
 
