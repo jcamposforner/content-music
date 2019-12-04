@@ -4,11 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Content;
 use App\Http\Requests\ContentRequest;
+use App\Repositories\ContentRepositoryInterface;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
 
 class ContentController extends Controller
 {
+    /**
+     * @var ContentRepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * ContentController constructor.
+     * @param ContentRepositoryInterface $repository
+     */
+    public function __construct(ContentRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
@@ -51,7 +66,7 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-        $content = Content::findOrFail($id);
+        $content = $this->repository->find($id);
 
         return response()->json([
             'status'  => 200,
