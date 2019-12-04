@@ -40,18 +40,18 @@ class ContentController extends Controller
 
     /**
      * @param ContentRequest $request
-     * @param Content $content
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function store(ContentRequest $request, Content $content)
+    public function store(ContentRequest $request)
     {
-        $content->title       = $request->title;
-        $content->description = $request->description;
-        $content->src         = Uuid::generate()->string;
-        $content->user()->associate($request->user());
-        $content->save();
+        $content = $this->repository->create([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'src'         => Uuid::generate()->string,
+            'user_id'     => $request->user()->id
+        ]);
 
         return response()->json([
             'status'  => 201,
@@ -102,7 +102,8 @@ class ContentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Request $request
+     * @param  int    $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, $id)
@@ -112,7 +113,7 @@ class ContentController extends Controller
             return $this->unauthorizedResponse();
         }
 
-        $content->delete();
+        $this->repository->delete($id);
 
         return response()->json([
             'status'  => 204,

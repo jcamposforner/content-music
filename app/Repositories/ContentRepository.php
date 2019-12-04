@@ -29,4 +29,20 @@ class ContentRepository implements ContentRepositoryInterface
 
         return $content;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): int
+    {
+        return $this->model->destroy($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create(array $data): Model
+    {
+        return $this->model->create($data);
+    }
 }
